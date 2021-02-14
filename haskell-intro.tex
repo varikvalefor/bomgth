@@ -1,0 +1,264 @@
+\documentclass{beamer}
+\usefonttheme{professionalfonts}
+\mode<presentation>
+{
+	\usetheme{Warsaw}
+	\setbeamercovered{transparent}
+}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{graphicx}
+\lstset{escapechar=@,
+	basicstyle=\ttfamily\color{black},
+	keywordstyle=\color{blue}\bfseries,
+	identifierstyle=\color{red},
+	commentstyle=\color{darkgray},
+	stringstyle=\ttfamily,
+	showstringspaces=false,
+}
+\usefonttheme{serif}
+\title[The Saga Begins]{A Bitter Old Man's Haskell Guide \\ \small{The Saga Begins}}
+\author[VALEFOR, VARIK]{VALEFOR, VARIK \\ $<$varikvalefor@aol.com$>$}
+\begin{document}
+	\maketitle
+	\tableofcontents
+	\begin{frame}{About the Speaker}
+		VARIK VALEFOR
+			\begin{itemize}
+				\item Intelligence analyst
+				\begin{itemize}
+					\item \textbf{\textit{Not}} a computer programmer!!!
+					\item Can only answer a few questions re: work
+				\end{itemize}
+				\item Diverse set of skills
+			\begin{itemize}
+				\item Mathematics!
+				\begin{itemize}
+					\item Can't add numbers or do other low-level things
+					\item Dove into calculus in the sixth grade
+					\item Concepts understood and applied well
+					\item Computers made for a reason
+				\end{itemize}
+				\item Computer programming
+				\begin{itemize}
+					\item Generally not enjoyed
+					\item Haskell is a favourite language
+					\item Obsoletes low-to-mid-level mathematical tasks
+				\end{itemize}
+				\item Motivating similar people via shouting
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	\section{What is Haskell?}
+		\subsection{In a Nutshell}
+			\begin{frame}{In a Nutshell}
+				Haskell is\dots
+				\begin{itemize}
+					\item A functional language
+					\item TURING-complete
+					\item \textit{\textbf{Applicable in the real world!}}
+				\end{itemize}
+			\end{frame}
+		\subsection{What Haskell Lacks}
+			\begin{frame}{What Haskell Lacks}
+				Haskell\dots
+				\begin{itemize}
+					\item Has no ``traditional'' loops
+					\begin{itemize}
+						\item Ex. \texttt{for(int i=0;i<90210;i++) printf("\%i ", i);}
+						\item \texttt{map} often used instead\\
+							\texttt{mapM ($\backslash$a -> putStr \$ show a ++ " ") [0..90210];}
+						\item Recursion also used
+					\end{itemize}
+					\item \dots's Non-IO functions cannot perform IO operations
+					\begin{itemize}
+						\item \texttt{int b(int c) \{printf('ass'); return 1;\}}
+							has no Haskell equivalent
+						\item Instead, monadic functions are used
+						\begin{itemize}
+							\item Oh\dots monads.
+						\end{itemize}
+					\end{itemize}
+				\end{itemize}
+			\end{frame}
+		\subsection{What Haskell \textit{Has}}
+			\begin{frame}{What Haskell \textit{Has}}
+				Haskell has\dots
+				\begin{itemize}
+					\item A formal specification
+					\begin{itemize}
+						\item All aspects of language outlined
+						\item Freely available and modifiable
+					\end{itemize}
+					\item Monads
+					\begin{itemize}
+						\item Sometimes scare the piss out of beginners
+						\item ``Very unique''
+					\end{itemize}
+					\item Strong typing
+					\item Lazy execution
+					\begin{itemize}
+						\item Bad name; good thing
+						\item ``Stuff calculated only if stuff actually used''
+					\end{itemize}
+					\item The Glasgow Haskell Compiler
+					\begin{itemize}
+						\item Fast; speeds rival the speeds of
+							good C programs
+						\item REPL via GHCi
+					\end{itemize}
+				\end{itemize}
+			\end{frame}
+			\section{\textit{Main} Advantages of Using Haskell}
+		\subsection{Functional Nature}
+			\begin{frame}{The Advantages of Functional Programming}
+				\begin{itemize}
+					\item Stronger resemblance to mathematical notation
+					\item Understanding \textit{well-written} programs easy
+					\item Functions' purposes can be approximately determined
+						by inspecting functions' types
+					\item Solving certain problems becomes trivial
+				\end{itemize}
+			\end{frame}
+		\subsection{High Maintainability}
+			\begin{frame}{Maintainability}
+				\begin{itemize}
+					\item Terse, high-level
+					\begin{itemize}
+						\item Programs fairly easily re-written
+						\item Understanding \textit{well-written} programs easy
+					\end{itemize}
+					\item Strong type system enforced
+					\begin{itemize}
+						\item ``This function must be of this type.''
+						\item Simplifies writing solutions for small problems
+					\end{itemize}
+				\end{itemize}
+			\end{frame}
+		\subsection{Speed}
+			\begin{frame}{Writing Haskell Programs}
+				\begin{itemize}
+					\item Reading and writing Haskell programs easy after language
+						understood
+					\item Compilers' output can be stupidly fast
+					\begin{itemize}
+						\item \dots but only when given good programs
+					\end{itemize}
+				\end{itemize}
+			\end{frame}
+	\section{Potential Disadvantages of Using Haskell}
+		\subsection{Extremely Different}
+			\begin{frame}{Declarative}
+				Declarative programming\dots
+				\begin{itemize}
+					\item Extremely high-level; often a source of difficulty
+					\begin{itemize}
+						\item Many Stack Overflow questions re: Haskell
+							\texttt{while} loops 
+					\end{itemize}
+					\item ``Computer is told to do $X$, instead of being given
+						instructions for doing $X$''
+					\item Requires approaching problems differently
+					\begin{itemize}
+						\item Case in point: no loops; no variable redefinitions
+					\end{itemize}
+				\end{itemize}
+			\end{frame}
+			\begin{frame}[fragile]{Example of Not Using Loops}
+				\small
+				\begin{lstlisting}[language=C++]
+bool isPrime(bigint x)
+{
+	bool k = true;
+	for(bigint j = 2; j < x/2; j++)
+		if (x % j == 0)
+			k = false;
+	return k;
+}
+				\end{lstlisting}
+				is equivalent to\dots
+				\begin{lstlisting}[language=Haskell]
+isPrime :: Integer -> Bool;
+isPrime j = filter ((==0) . (mod j)) f == []
+        where f = [2..b j]
+              b = floor . sqrt . fromIntegral
+              --Integer SQRT defined above
+				\end{lstlisting}
+			\end{frame}
+			\begin{frame}{Monads}
+				\begin{columns}
+					\begin{column}{0.75\textwidth}
+						Monads are\dots
+						\begin{itemize}
+							\item Integral to Haskell, with \texttt{>>=} even being
+								visible in some logos
+							\item Not terribly easily explained
+							\item Likely the real challenge of this video series
+							\item Like burritos..?
+							\item ``Wrappers'' for things..?
+							\item Really a blessing in disguise
+						\end{itemize}
+					\end{column}
+					\begin{column}{0.25\textwidth}
+						\includegraphics[width=1\textwidth]{x-mow-nads.png}
+					\end{column}
+				\end{columns}
+			\end{frame}
+			\begin{frame}{Relatively Strange Syntax}
+				\begin{itemize}
+					\item \$ operator
+					\item \texttt{>>=}
+					\item Relatively akin to mathematical notation
+					\item Parentheses not used by functions
+					\item Semicolons unnecessary
+				\end{itemize}
+			\end{frame}
+		\subsection{Relatively Uncommon}
+			\begin{frame}{Relatively Uncommon}
+				Haskell is relatively uncommon.
+				\begin{itemize}
+					\item Less assistance available
+					\item Fewer compilers available
+					\item Fewer libraries available
+					\item \texttt{putStrLn \$ "So on" ++ cycle ", and so on" ++ "."}
+				\end{itemize}
+			\end{frame}
+	\section{Onto the Point\dots}
+		\subsection{Why Learn Haskell?}
+			\begin{frame}{Why Learn Haskell?}
+				\begin{itemize}
+					\item Forces using different solutions
+					\begin{itemize}
+						\item Haskell's solutions differ from imperative solutions
+					\end{itemize}
+					\item Haskell is actually a very practical language
+					\begin{itemize}
+						\item Haskell can compute all computable things
+						\item Solutions created quickly
+						\item Such solutions are fast \textit{and maintainable}
+						\item Source code fully portable
+					\end{itemize}
+				\end{itemize}
+			\end{frame}
+		\subsection{Why Use this Guide?}
+			\begin{frame}{Why Use this Guide?}
+				This video series should introduce the viewer to Haskell such
+				that this introduction is relatively\dots
+				\begin{itemize}
+					\item Humorous
+					\item Enjoyable
+					\item Focused on practical stuff
+					\item Hopefully a bit relaxing, too
+					\item Most future videos primarily feature the text editor/CLI
+				\end{itemize}
+				Think of a video equivalent of
+				\textit{Learn You a Haskell for Great Good}.
+			\end{frame}
+		\subsection{If You're Still Here\dots}
+			\begin{frame}{If You're Still Here, then\dots}
+				\huge{Let's go!}\footnote{\Tiny{The next video might not be
+						released for a little while.  Whoops.}}
+			\end{frame}
+\end{document}
+%We started from the bottom; now, we're... still at the bottom.  Shit.
