@@ -11,6 +11,10 @@ main = getArgs >>= putStrLn . concatArgs;
 --In main, (>>=) effectively converts getArgs's IO [String] into [String],
 --which facilitates concatenating the program's arguments via concatArgs
 --before sending these concatenated arguments to the console via putStrLn.
+--
+--getArgs's IO [String] is "converted" into [String] via (>>=).
+--(>>=)'s [String] is "converted" to String via concatArgs.
+--concatArgs's String is "converted" to IO () via putStrLn.
 
 fun :: IO ();
 fun = do
