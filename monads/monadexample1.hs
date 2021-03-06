@@ -1,4 +1,3 @@
-import Control.Monad;
 import System.Environment;
 
 g :: [String] -> String;
