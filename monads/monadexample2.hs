@@ -16,7 +16,7 @@ fun :: IO ();
 fun = do
   g <- getArgs;
   putStrLn $ concatArgs g;
-  
+
 --main and fun are actually equivalent functions.
 --However, VARIK finds that the readability of main is greater
 --than the readability of fun.
