@@ -1,15 +1,14 @@
 useless :: Monad m => a -> (a -> m b) -> m b;
-useless a b = (>>=) (return a) b;
--- \texttt{useless} encases the first input into a monad, ``extracts''
--- the value of the resulting monad, sends this value to function
--- \texttt{b}, and outputs a monad.
+useless v f = (>>=) (return v) f;
 
--- return converts \texttt{a}'s type from \texttt{a} to
+-- \texttt{return} converts \texttt{v}'s type \texttt{a} into
+-- type \texttt{[ARBITRARY MONAD] a}.
+-- \texttt{(>>=)} ``extracts'' \texttt{a} from
 -- \texttt{[ARBITRARY MONAD] a}.
--- \texttt{(>>=)} ``extracts'' the \texttt{a} value of
--- \texttt{[ARBITRARY MONAD] a} and applies function \texttt{b} to this
--- ``extracted'' value, thereby outputting a value whose type is shared
--- with the output type of function \texttt{b}.
+-- \texttt{f} then converts \texttt{a} into \texttt{m b}.
+
+-- As such, for all monadic functions \texttt{f}, for all variables
+-- \texttt{v}, \texttt{useless v f} is equivalent to \texttt{f v}.
 
 main :: IO ();
 main = useless "Fuck you."  putStrLn;
