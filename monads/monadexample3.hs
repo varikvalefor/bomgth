@@ -11,4 +11,4 @@ useless v f = (>>=) (return v) f;
 -- \texttt{v}, \texttt{useless v f} is equivalent to \texttt{f v}.
 
 main :: IO ();
-main = useless "Fuck you."  putStrLn;
+main = useless "Fuck you." putStrLn;
