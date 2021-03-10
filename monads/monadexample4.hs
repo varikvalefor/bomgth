@@ -42,7 +42,7 @@ wc = getArgs >>= mapM_ (readFile >=> print . length . words);
 -- readFile equals the content of the file which is located at the
 -- input filepath.
 -- >=> ``extracts'' the non-monadic String of readFile and applies
--- function \texttt{print . length . words} to readFile, where...
+-- function print . length . words to readFile, where...
 --
 -- words splits the input String into [String], moving individual
 -- words into individual Strings.
