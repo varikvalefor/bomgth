@@ -84,11 +84,11 @@ env = getEnvironment >>= mapM_ (\a -> putStrLn $ fst a ++ "=" ++ snd a);
 -- getEnvironment returns a list of 2-tuples of type
 -- (ENVIRONMENT VARIABLE, VALUE).
 -- mapM\_ applies the nameless function
--- (\a -> putStrLn \$ fst a ++ "=" ++ snd a) to all 2-tuples which are
+-- (\a -> putStrLn $ fst a ++ "=" ++ snd a) to all 2-tuples which are
 -- contained within the output of getEnvironment.
 --
 -- For all 2-tuples $a$ of type (String, String),
--- (\a -> putStrLn \$ fst a ++ "=" ++ snd a) places an equality sign
+-- (\a -> putStrLn $ fst a ++ "=" ++ snd a) places an equality sign
 -- between the first and second elements of $a$, then prints the
 -- resulting string to the console.
 --
