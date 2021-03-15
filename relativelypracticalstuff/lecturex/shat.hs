@@ -1,4 +1,5 @@
 import Control.Monad;
+import System.Exit
 import System.Environment;
 import System.IO;
 import Data.List
@@ -29,14 +30,14 @@ edDel cmd buf = return $ take (n - 1) buf ++ drop n buf
   where n = read $ init cmd :: Int
 
 edFunction :: [String] -> IO () ;
-edFunction buf = getLine >>= detFun
-  where detFun cmd | length cmd == 0 = std err
-          | last cmd == 'p' = std $ edPrintLine cmd buf
-          | last cmd == 'i' = std $ edInsertLine cmd buf
-          | head cmd == 'w' = std $ edWrite buf (drop 2 cmd)
-          | last cmd == 'd' = std $ edDel cmd buf
-          | last cmd == 'q' = return ()
-          | otherwise = std err
+edFunction buf = getLine >>= detFun >>= edFunction
+  where detFun cmd | length cmd == 0 = err
+          | last cmd == 'p' = edPrintLine cmd buf
+          | last cmd == 'i' = edInsertLine cmd buf
+          | head cmd == 'w' = edWrite buf (drop 2 cmd)
+          | last cmd == 'd' = edDel cmd buf
+          | last cmd == 'q' = exitSuccess
+          | otherwise = err
         err = putStrLn "?" >> return buf
         std x = x >>= edFunction
 
