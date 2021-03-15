@@ -12,10 +12,10 @@ insertAt n i xs = take g xs ++ i ++ drop g xs
   where g = n - 1
 
 edPrintLine :: String -> [String] -> IO [String];
-edPrintLine cmd buf | init cmd == "," = mapM_ putStrLn buf >> return buf
-                    | otherwise = (putStrLn $ buf !! (k - 1)) >>
-                      return buf
+edPrintLine cmd buf | init cmd == "," = mapM_ putStrLn buf >> x
+                    | otherwise = (putStrLn $ buf !! (k - 1)) >> x
                     where k = read $ init cmd :: Int
+                          x = return buf
 
 edInsertLine :: Int -> [String] -> IO [String];
 edInsertLine n buf = isEOF >>= \cont ->
