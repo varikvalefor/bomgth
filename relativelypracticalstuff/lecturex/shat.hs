@@ -21,14 +21,14 @@ edInsertLine :: Int -> [String] -> IO [String];
 edInsertLine n buf = isEOF >>= \cont ->
   if cont
     then return buf
-    else getLine >>= \x -> edInsertLine (n + 1) (insertAt n [x] buf)
+    else getLine >>= \x -> edInsertLine (n + 1) (insertAt n [x] buf);
 
 edWrite :: [String] -> String -> IO [String];
 edWrite buf fn = writeFile fn conkd >> return buf
   where conkd = (foldr (++) [] . intersperse "\n") buf
 
 edDel :: Int -> [String] -> IO [String];
-edDel n buf = return $ take (n - 1) buf ++ drop n buf
+edDel n buf = return $ take (n - 1) buf ++ drop n buf;
 
 edFunction :: [String] -> IO () ;
 edFunction buf = getLine >>= detFun >>= edFunction
