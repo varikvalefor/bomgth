@@ -43,6 +43,7 @@ edFunction buf = getLine >>= detFun >>= edFunction
           | head cmd == 'w' = edWrite buf (drop 2 cmd)
           | last cmd == 'd' = edDel n buf
           | last cmd == 'q' = exitSuccess
+          | last cmd == 'c' = edDel n buf >>= edInsertLine n
           | otherwise = err
           where n = read $ init cmd :: Int
         err = putStrLn "?" >> return buf
