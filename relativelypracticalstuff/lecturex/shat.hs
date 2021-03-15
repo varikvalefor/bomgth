@@ -8,7 +8,7 @@ import Data.List.Split;
 main :: IO ();
 main = getArgs >>= openfile
   where openfile x
-          | x == [] = edFunction []
+          | x == [] = edFunction x
           | otherwise = readFile (x !! 0) >>= edFunction . splitOn "\n"
 
 insertAt :: Int -> [a] -> [a] -> [a];
