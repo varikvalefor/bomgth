@@ -15,10 +15,11 @@ edPrintLine :: Int -> [String] -> IO [String];
 edPrintLine n buf = (putStrLn $ buf !! (n - 1)) >> return buf;
 
 edInsertLine :: Int -> [String] -> IO [String];
-edInsertLine n buf = isEOF >>= \cont ->
-  if cont
-    then return buf
-    else getLine >>= \x -> edInsertLine (n + 1) (insertAt n [x] buf);
+edInsertLine n buf = isEOF >>= det
+  where det a
+          | a = return buf
+          | otherwise = getLine >>= \x ->
+            edInsertLine (n + 1) (insertAt n [x] buf)
 
 edWrite :: [String] -> String -> IO [String];
 edWrite buf fn = writeFile fn conkd >> return buf
