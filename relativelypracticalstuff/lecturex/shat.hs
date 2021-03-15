@@ -32,7 +32,8 @@ edDel n buf = return $ take (n - 1) buf ++ drop n buf;
 
 edFunction :: [String] -> IO ();
 edFunction buf = getLine >>= detFun >>= edFunction
-  where detFun cmd | length cmd == 0 = err
+  where detFun cmd
+          | length cmd == 0 = err
           | last cmd == 'p' = edPrintLine cmd buf
           | last cmd == 'i' = edInsertLine n buf
           | head cmd == 'w' = edWrite buf (drop 2 cmd)
