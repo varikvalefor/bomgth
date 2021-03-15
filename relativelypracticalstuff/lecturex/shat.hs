@@ -2,10 +2,14 @@ import Control.Monad;
 import System.Exit
 import System.Environment;
 import System.IO;
-import Data.List
+import Data.List;
+import Data.List.Split;
 
 main :: IO ();
-main = edFunction [];
+main = getArgs >>= openfile
+  where openfile x
+          | x == [] = edFunction []
+          | otherwise = readFile (x !! 0) >>= edFunction . splitOn "\n"
 
 insertAt :: Int -> [a] -> [a] -> [a];
 insertAt n i xs = take g xs ++ i ++ drop g xs
