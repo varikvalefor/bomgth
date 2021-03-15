@@ -18,12 +18,12 @@ insertAt n i xs = take g xs ++ i ++ drop g xs
 edPrintLine :: Int -> [String] -> IO [String];
 edPrintLine n buf = (putStrLn $ buf !! (n - 1)) >> return buf;
 
-edInsertLine :: Int -> [String] -> IO [String];
-edInsertLine n buf = isEOF >>= det
+edInsert :: Int -> [String] -> IO [String];
+edInsert n buf = isEOF >>= det
   where det a
           | a = return buf
           | otherwise = getLine >>= \x ->
-            edInsertLine (n + 1) (insertAt n [x] buf)
+            edInsert (n + 1) (insertAt n [x] buf)
 
 edWrite :: [String] -> String -> IO [String];
 edWrite buf fn = writeFile fn conkd >> return buf
@@ -39,11 +39,11 @@ edFunction buf = getLine >>= detFun >>= edFunction
           | cmd == ",p" = mapM_ (\m -> edPrintLine m buf)
             [1..length buf] >> return buf
           | last cmd == 'p' = edPrintLine n buf
-          | last cmd == 'i' = edInsertLine n buf
+          | last cmd == 'i' = edInsert n buf
           | head cmd == 'w' = edWrite buf (drop 2 cmd)
           | last cmd == 'd' = edDel n buf
           | last cmd == 'q' = exitSuccess
-          | last cmd == 'c' = edDel n buf >>= edInsertLine n
+          | last cmd == 'c' = edDel n buf >>= edInsert n
           | otherwise = err
           where n = read $ init cmd :: Int
         err = putStrLn "?" >> return buf
