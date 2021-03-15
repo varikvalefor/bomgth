@@ -17,9 +17,11 @@ edPrintLine cmd buf | init cmd == "," = mapM_ putStrLn buf >> return buf
                       return buf
                     where k = read $ init cmd :: Int
 
-edInsertLine :: String -> [String] -> IO [String];
-edInsertLine a b = hGetContents stdin >>= \c -> return $ insertAt a' (words c) b 
-  where a' = read $ init a :: Int
+edInsertLine :: Int -> [String] -> IO [String];
+edInsertLine n buf = isEOF >>= \cont ->
+  if cont
+    then return buf
+    else getLine >>= \x -> edInsertLine (n + 1) (insertAt n [x] buf)
 
 edWrite :: [String] -> String -> IO [String];
 edWrite buf fn = writeFile fn conkd >> return buf
@@ -33,7 +35,7 @@ edFunction :: [String] -> IO () ;
 edFunction buf = getLine >>= detFun >>= edFunction
   where detFun cmd | length cmd == 0 = err
           | last cmd == 'p' = edPrintLine cmd buf
-          | last cmd == 'i' = edInsertLine cmd buf
+          | last cmd == 'i' = edInsertLine (read $ init cmd) buf
           | head cmd == 'w' = edWrite buf (drop 2 cmd)
           | last cmd == 'd' = edDel cmd buf
           | last cmd == 'q' = exitSuccess
