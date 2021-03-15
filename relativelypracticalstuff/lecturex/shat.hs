@@ -27,19 +27,19 @@ edWrite :: [String] -> String -> IO [String];
 edWrite buf fn = writeFile fn conkd >> return buf
   where conkd = (foldr (++) [] . intersperse "\n") buf
 
-edDel :: String -> [String] -> IO [String];
-edDel cmd buf = return $ take (n - 1) buf ++ drop n buf
-  where n = read $ init cmd :: Int
+edDel :: Int -> [String] -> IO [String];
+edDel n buf = return $ take (n - 1) buf ++ drop n buf
 
 edFunction :: [String] -> IO () ;
 edFunction buf = getLine >>= detFun >>= edFunction
   where detFun cmd | length cmd == 0 = err
           | last cmd == 'p' = edPrintLine cmd buf
-          | last cmd == 'i' = edInsertLine (read $ init cmd) buf
+          | last cmd == 'i' = edInsertLine n buf
           | head cmd == 'w' = edWrite buf (drop 2 cmd)
-          | last cmd == 'd' = edDel cmd buf
+          | last cmd == 'd' = edDel n buf
           | last cmd == 'q' = exitSuccess
           | otherwise = err
+          where n = read $ init cmd :: Int
         err = putStrLn "?" >> return buf
         std x = x >>= edFunction
 
