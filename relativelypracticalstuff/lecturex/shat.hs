@@ -5,7 +5,7 @@ import System.IO;
 import Data.List
 
 main :: IO ();
-main = shat [];
+main = edFunction [];
 
 insertAt :: Int -> [a] -> [a] -> [a];
 insertAt n i xs = take g xs ++ i ++ drop g xs
@@ -42,8 +42,3 @@ edFunction buf = getLine >>= detFun >>= edFunction
           where n = read $ init cmd :: Int
         err = putStrLn "?" >> return buf
         std x = x >>= edFunction
-
-shat :: [String] -> IO ();
-shat k = hIsEOF stdin >>= \a ->
-  when a (edFunction k) >> 
-  when (not a) (getLine >>= \a -> shat $ k ++ [a]);
