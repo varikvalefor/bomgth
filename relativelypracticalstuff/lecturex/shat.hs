@@ -11,11 +11,8 @@ insertAt :: Int -> [a] -> [a] -> [a];
 insertAt n i xs = take g xs ++ i ++ drop g xs
   where g = n - 1
 
-edPrintLine :: String -> [String] -> IO [String];
-edPrintLine cmd buf | init cmd == "," = mapM_ putStrLn buf >> x
-                    | otherwise = (putStrLn $ buf !! (k - 1)) >> x
-                    where k = read $ init cmd :: Int
-                          x = return buf
+edPrintLine :: Int -> [String] -> IO [String];
+edPrintLine n buf = (putStrLn $ buf !! (n - 1)) >> return buf;
 
 edInsertLine :: Int -> [String] -> IO [String];
 edInsertLine n buf = isEOF >>= \cont ->
@@ -34,7 +31,9 @@ edFunction :: [String] -> IO ();
 edFunction buf = getLine >>= detFun >>= edFunction
   where detFun cmd
           | length cmd == 0 = err
-          | last cmd == 'p' = edPrintLine cmd buf
+          | cmd == ",p" = mapM_ (\m -> edPrintLine m buf)
+            [1..length buf] >> return buf
+          | last cmd == 'p' = edPrintLine n buf
           | last cmd == 'i' = edInsertLine n buf
           | head cmd == 'w' = edWrite buf (drop 2 cmd)
           | last cmd == 'd' = edDel n buf
