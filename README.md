@@ -13,6 +13,6 @@ This lecture introduces the viewer to monads.  Although this lecture is focused 
 This lecture can be viewed at http://diode.zone/videos/watch/a42215eb-17b6-4415-a61f-c392364316a9, http://vimeo.com/519777001, or http://www.youtube.com/watch?v=-GyfAcakNPU.
 
 ## Good Wishes and Whatnot
-As ever, criticism is welcomed.
+As ever, criticism and suggestions are welcomed.
 
 Happy Haskelling.
