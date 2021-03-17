@@ -9,3 +9,6 @@
         
 main :: IO ();
 main = putStrLn $ "2 + 2 = " ++ show (2 + 2) ++ ".";
+-- "." is appended to a String representation of (2 + 2),
+-- which is appended to "2 + 2 = ".
+-- putStrLn prints the resulting String to the console.
