@@ -15,4 +15,4 @@ This lecture can be viewed at http://diode.zone/videos/watch/a42215eb-17b6-4415-
 ## Good Wishes and Whatnot
 As ever, criticism and suggestions are welcomed.
 
-Happy Haskelling.
+Good luck.
