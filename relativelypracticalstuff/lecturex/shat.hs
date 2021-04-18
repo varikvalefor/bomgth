@@ -36,6 +36,7 @@ edFunction buf = getLine >>= detFun >>= edFunction
           | length cmd == 0 = err
           | cmd == ",p" = mapM_ (\m -> edPrintLine m buf)
             [1..length buf] >> return buf
+          | cmd == "i" = edInsert 1 buf
           | last cmd == 'p' = edPrintLine n buf
           | last cmd == 'i' = edInsert n buf
           | head cmd == 'w' = edWrite buf (drop 2 cmd)
