@@ -10,6 +10,18 @@ main = getArgs >>= \ a -> if a == []
   then edFunction a
   else readFile (a !! 0) >>= edFunction . splitOn "\n";
 
+parseNums :: String -> [String] -> [Int];
+parseNums n b = haveFun $ map san $ splitOn "," n
+  where
+    haveFun ["",""] = [1,length b]
+    haveFun ["",c] = [1,read c]
+    haveFun [a,""] = [read a,length b]
+    haveFun j = map read j
+    san = filter (`elem` ['0'..'9']);
+
+genRange :: [Int] -> [Int];
+genRange [a,b] = [a..b];
+
 insertAt :: Int -> [a] -> [a] -> [a];
 insertAt n i xs = take g xs ++ i ++ drop g xs
   where g = n - 1
@@ -34,8 +46,10 @@ edFunction :: [String] -> IO ();
 edFunction buf = getLine >>= detFun >>= edFunction
   where detFun cmd
           | length cmd == 0 = err
-          | cmd == ",p" = mapM_ (\m -> edPrintLine m buf)
-            [1..length buf] >> return buf
+          | last cmd == 'p' = mapM_ (\m -> edPrintLine m buf)
+            k >> return buf
+          | last cmd == 'n' = mapM_ (\m -> putStr (show m ++ "\t") >>
+            edPrintLine m buf) k >> return buf
           | cmd == "i" = edInsert 1 buf
           | last cmd == 'p' = edPrintLine n buf
           | last cmd == 'i' = edInsert n buf
@@ -45,5 +59,6 @@ edFunction buf = getLine >>= detFun >>= edFunction
           | last cmd == 'c' = edDel n buf >>= edInsert n
           | otherwise = err
           where n = read $ init cmd :: Int
+                k = genRange $ parseNums cmd buf
         err = putStrLn "?" >> return buf
         std x = x >>= edFunction
