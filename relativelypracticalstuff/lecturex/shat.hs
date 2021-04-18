@@ -6,10 +6,9 @@ import Data.List;
 import Data.List.Split;
 
 main :: IO ();
-main = getArgs >>= openfile
-  where openfile x
-          | x == [] = edFunction x
-          | otherwise = readFile (x !! 0) >>= edFunction . splitOn "\n"
+main = getArgs >>= \ a -> if a == []
+  then edFunction a
+  else readFile (a !! 0) >>= edFunction . splitOn "\n";
 
 insertAt :: Int -> [a] -> [a] -> [a];
 insertAt n i xs = take g xs ++ i ++ drop g xs
