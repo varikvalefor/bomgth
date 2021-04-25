@@ -24,7 +24,7 @@ genRange [a,b] = [a..b];
 
 insertAt :: Int -> [a] -> [a] -> [a];
 insertAt n i xs = take g xs ++ i ++ drop g xs
-  where g = n - 1
+  where g = n - 1;
 
 edPrintLine :: Int -> [String] -> IO [String];
 edPrintLine n buf = (putStrLn $ buf !! (n - 1)) >> return buf;
