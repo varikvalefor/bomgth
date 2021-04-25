@@ -61,4 +61,4 @@ edFunction buf = getLine >>= detFun >>= edFunction
           where n = read $ init cmd :: Int
                 k = genRange $ parseNums cmd buf
         err = putStrLn "?" >> return buf
-        std x = x >>= edFunction
+        std x = x >>= edFunction;
