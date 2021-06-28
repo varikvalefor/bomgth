@@ -49,8 +49,7 @@ edFunction buf = getLine >>= detFun >>= edFunction
   where
   detFun cmd
     | length cmd == 0 = err
-    | last cmd == 'p' = mapM_ (\m -> edPrintLine m buf)
-      k >> return buf
+    | last cmd == 'p' = mapM_ (flip edPrintLine buf) k >> return buf
     | last cmd == 'n' = mapM_ (\m -> putStr (show m ++ "\t") >>
       edPrintLine m buf) k >> return buf
     | cmd == "i" = edInsert 1 buf
