@@ -6,9 +6,10 @@ import Data.List;
 import Data.List.Split;
 
 main :: IO ();
-main = getArgs >>= \ a -> if a == []
-  then edFunction a
-  else readFile (a !! 0) >>= edFunction . lines;
+main = getArgs >>= \a ->
+  if a == []
+    then edFunction a
+    else readFile (a !! 0) >>= edFunction . lines;
 
 parseNums :: String -> [String] -> [Int];
 parseNums n b = haveFun $ map san $ splitOn "," n
