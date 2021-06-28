@@ -46,21 +46,22 @@ edDel n buf = return $ take (n - 1) buf ++ drop n buf;
 
 edFunction :: [String] -> IO ();
 edFunction buf = getLine >>= detFun >>= edFunction
-  where detFun cmd
-          | length cmd == 0 = err
-          | last cmd == 'p' = mapM_ (\m -> edPrintLine m buf)
-            k >> return buf
-          | last cmd == 'n' = mapM_ (\m -> putStr (show m ++ "\t") >>
-            edPrintLine m buf) k >> return buf
-          | cmd == "i" = edInsert 1 buf
-          | last cmd == 'p' = edPrintLine n buf
-          | last cmd == 'i' = edInsert n buf
-          | head cmd == 'w' = edWrite buf $ drop 2 cmd
-          | last cmd == 'd' = edDel n buf
-          | last cmd == 'q' = exitSuccess
-          | last cmd == 'c' = edDel n buf >>= edInsert n
-          | otherwise = err
-          where n = read $ init cmd :: Int
-                k = genRange $ parseNums cmd buf
-        err = putStrLn "?" >> return buf
-        std x = x >>= edFunction;
+  where
+  detFun cmd
+    | length cmd == 0 = err
+    | last cmd == 'p' = mapM_ (\m -> edPrintLine m buf)
+      k >> return buf
+    | last cmd == 'n' = mapM_ (\m -> putStr (show m ++ "\t") >>
+      edPrintLine m buf) k >> return buf
+    | cmd == "i" = edInsert 1 buf
+    | last cmd == 'p' = edPrintLine n buf
+    | last cmd == 'i' = edInsert n buf
+    | head cmd == 'w' = edWrite buf $ drop 2 cmd
+    | last cmd == 'd' = edDel n buf
+    | last cmd == 'q' = exitSuccess
+    | last cmd == 'c' = edDel n buf >>= edInsert n
+    | otherwise = err
+    where n = read $ init cmd :: Int
+          k = genRange $ parseNums cmd buf
+  err = putStrLn "?" >> return buf
+  std x = x >>= edFunction;
