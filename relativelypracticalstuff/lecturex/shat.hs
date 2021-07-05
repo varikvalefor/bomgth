@@ -1,5 +1,6 @@
 import Control.Monad;
 import System.Exit;
+import System.Directory;
 import System.Environment;
 import System.IO;
 import Data.List;
@@ -9,7 +10,10 @@ main :: IO ();
 main = getArgs >>= \a ->
   if a == []
     then edFunction a
-    else readFile (a !! 0) >>= edFunction . lines;
+    else doesFileExist (a !! 0) >>= \fileExists ->
+      if fileExists
+        then readFile (a !! 0) >>= edFunction . lines
+        else writeFile (a !! 0) "" >> main;
 
 parseNums :: String -> [String] -> [Int];
 parseNums n b = haveFun $ map san $ splitOn "," n
