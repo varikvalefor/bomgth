@@ -1,5 +1,5 @@
 import Control.Monad;
-import System.Exit
+import System.Exit;
 import System.Environment;
 import System.IO;
 import Data.List;
