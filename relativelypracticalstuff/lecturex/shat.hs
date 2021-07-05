@@ -59,6 +59,7 @@ edFunction buf = getLine >>= detFun >>= edFunction
     | cmd == "i" = edInsert 1 buf
     | last cmd == 'p' = edPrintLine n buf
     | last cmd == 'i' = edInsert n buf
+    | last cmd == 'a' = edInsert (n + 1) buf
     | head cmd == 'w' = edWrite buf $ unwords $ drop 1 $ words cmd
     | last cmd == 'd' = edDel n buf
     | last cmd == 'q' = exitSuccess
