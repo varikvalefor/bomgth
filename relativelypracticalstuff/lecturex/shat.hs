@@ -60,7 +60,8 @@ edFunction buf = getLine >>= detFun >>= edFunction
     | last cmd == 'q' = exitSuccess
     | last cmd == 'c' = edDel n buf >>= edInsert n
     | otherwise = err
-    where n = read $ init cmd
-          k = genRange $ parseNums cmd buf
+    where
+    n = read $ init cmd
+    k = genRange $ parseNums cmd buf
   err = putStrLn "?" >> return buf
   std x = x >>= edFunction;
