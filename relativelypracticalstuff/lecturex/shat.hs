@@ -18,11 +18,11 @@ main = getArgs >>= \a ->
 parseNums :: String -> [String] -> [Int];
 parseNums n b = haveFun $ map san $ splitOn "," n
   where
-    haveFun ["",""] = [1,length b]
-    haveFun ["",c] = [1,read c]
-    haveFun [a,""] = [read a,length b]
-    haveFun j = map read j
-    san = filter (`elem` ['0'..'9']);
+  haveFun ["",""] = [1,length b]
+  haveFun ["",c] = [1,read c]
+  haveFun [a,""] = [read a,length b]
+  haveFun j = map read j
+  san = filter (`elem` ['0'..'9']);
 
 genRange :: [Int] -> [Int];
 genRange [a,b] = [a..b];
